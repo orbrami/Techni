@@ -22,7 +22,6 @@
     "react-dropzone": "^14.2.3",
     "react-hot-toast": "^2.4.1",
     "date-fns": "^3.6.0",
-    "date-fns/locale": "*",
     "socket.io-client": "^4.7.5",
     "framer-motion": "^11.3.8",
     "react-intersection-observer": "^9.13.0",
