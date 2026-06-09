@@ -133,19 +133,22 @@ router.delete('/:id/comment/:commentId', authenticate, async (req: AuthRequest, 
     return;
   }
 
-  const comment = post.comments.id(req.params.commentId);
-  if (!comment) {
+  const commentIndex = post.comments.findIndex(
+    (c) => c._id.toString() === req.params.commentId
+  );
+  if (commentIndex === -1) {
     res.status(404).json({ message: 'Comment not found' });
     return;
   }
 
-  // Only author or admin can delete
+  const comment = post.comments[commentIndex];
+
   if (!comment.author.equals(req.user!._id) && req.user!.role !== 'admin') {
     res.status(403).json({ message: 'Not authorized' });
     return;
   }
 
-  comment.deleteOne();
+  post.comments.splice(commentIndex, 1);
   await post.save();
   res.json({ message: 'Comment deleted' });
 });
